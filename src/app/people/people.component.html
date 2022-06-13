@@ -1,0 +1,15 @@
+<div style="text-align: center;">
+    <button style="cursor: pointer;" (click)="add()">+</button>
+</div>
+
+<div class="box">
+    <div>
+      <app-person
+        *ngFor="let personElement of people; let iterator = index"
+        [person]="personElement"
+        [i]="iterator"
+      ></app-person>
+    </div>
+  </div>
+  
+ <router-outlet></router-outlet>

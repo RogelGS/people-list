@@ -22,6 +22,9 @@ export class PeopleService {
 
   getPersonAdded(person: Person) {
     this.logginService.sendMessageToConsole("Agregamos persona: " + person.firstName + person.lastName);
+    if (this.people == null) {
+      this.people = []
+    }
     this.people.push(person);
     this.dataservice.savePeople(this.people);
   }
@@ -39,9 +42,18 @@ export class PeopleService {
     let newPerson = this.people[index];
     newPerson.firstName = person.firstName;
     newPerson.lastName = person.lastName;
+    this.dataservice.updatePerson(index, person);
   }
 
   deletePerson(index: number) {
     this.people.splice(index, 1);
+    this.dataservice.deletePerson(index);
+    // Se vuelve a generar el arreglo con las personas existentes y evitar que el index salte
+    this.updatePeople();
+  }
+
+  updatePeople() {
+    if(this.people === null) return;
+    this.dataservice.savePeople(this.people);
   }
 }
